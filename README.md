@@ -1,5 +1,23 @@
 # signalk-to-stalk
-Signal K Node server plugin to convert Signal K to STALK (Seatalk over NMEA 0183). See the code for a list of supported datagra,s.
+
+Signal K server plugin for converting Signal K navigation data to `$STALK`
+(SeaTalk1 datagrams transported as NMEA 0183 text).
+
+> [!WARNING]
+> This fork is under active development. Keep the existing Node-RED GPS/wind
+> bridge in production until the output has passed the staged tests described
+> in [docs/TESTING.md](docs/TESTING.md). Do not connect experimental output to
+> a live SeaTalk1 bus without monitoring it independently.
+
+## Fork status
+
+The upstream implementation currently supports GPS position, speed over ground,
+course, UTC time, and date. Apparent-wind output, source selection, stale-data
+handling, and bus-aware transmission protection are planned but not yet
+implemented. See [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md) for scope,
+decisions, known issues, and progress.
+
+## Upstream usage
 
 To use the plugin you need to activate the plugin and the relevant datagrams in server's Admin interface. This will make the conversion results (STALK) available on Signalk's built-in TCP NMEA 0183 server (Port 10110).
 
@@ -42,4 +60,12 @@ If you want to output the conversion result into a serial connection (i.e. Digit
 
 Note: Internally the plugin emits the converted NMEA 0183 messages as `Events` under the event identifier `stalkout`. The above configuration sends the converted data (SeaTalk over NMEA 0183) under the `stalkout` events identifier to the serialport's output.
 
-This Signal K server plugin has been developed from https://github.com/SignalK/signalk-to-nmea0183 and https://github.com/SignalK/signalk-autopilot excellent software components.
+This Signal K server plugin was developed from
+[`signalk-to-nmea0183`](https://github.com/SignalK/signalk-to-nmea0183) and
+[`signalk-autopilot`](https://github.com/SignalK/signalk-autopilot).
+
+## Development documentation
+
+- [Project plan and engineering decisions](docs/PROJECT_PLAN.md)
+- [Staged test and rollout procedure](docs/TESTING.md)
+- [Change log](CHANGELOG.md)
