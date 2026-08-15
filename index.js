@@ -1,10 +1,4 @@
 const Bacon = require('baconjs')
-const {
-  toDatagram,
-  computeChecksum,
-  toHexString,
-  padd
-} = require('./stalk')
 const path = require('path')
 const fs = require('fs')
 
@@ -26,11 +20,8 @@ module.exports = function (app) {
   }
 
   plugin.start = function (options) {
-    const selfContext = 'vessels.' + app.selfId
-    const selfMatcher = delta => delta.context && delta.context === selfContext
-
     function mapToStalk (encoder, throttle) {
-	    app.debug(encoder.datagram)
+      app.debug(encoder.datagram)
       const selfStreams = encoder.keys.map((key, index) => {
         let stream = app.streambundle.getSelfStream(key)
         if (encoder.defaults && typeof encoder.defaults[index] != 'undefined') {
@@ -58,6 +49,8 @@ module.exports = function (app) {
       plugin.unsubscribes.push(
         stream
           .onValue(nmeaString => {
+            app.emit('stalkout', nmeaString)
+            // Compatibility with the event emitted by the upstream version.
             app.emit('seatalkOut', nmeaString)
             if (sentenceEvent) {
               app.emit(sentenceEvent, nmeaString)

@@ -58,7 +58,9 @@ If you want to output the conversion result into a serial connection (i.e. Digit
 }
 ```
 
-Note: Internally the plugin emits the converted NMEA 0183 messages as `Events` under the event identifier `stalkout`. The above configuration sends the converted data (SeaTalk over NMEA 0183) under the `stalkout` events identifier to the serialport's output.
+Internally the plugin emits converted messages under the canonical `stalkout`
+event identifier. For compatibility with the upstream implementation it also
+emits `seatalkOut`; new serial-output configurations should use `stalkout`.
 
 This Signal K server plugin was developed from
 [`signalk-to-nmea0183`](https://github.com/SignalK/signalk-to-nmea0183) and

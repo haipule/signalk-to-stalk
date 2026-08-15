@@ -38,12 +38,14 @@ external component.
 ## Known baseline issues
 
 1. No apparent-wind angle or speed datagrams are implemented.
-2. The course encoder references an undefined variable (`ncd`) in one negative
-   angle branch.
-3. Several encoder variables are assigned without declarations and therefore
-   leak into global scope in non-strict JavaScript.
-4. The README documents `stalkout`, while the implementation emits
-   `seatalkOut`; the serial-output contract is therefore ambiguous.
+2. The baseline course encoder references an undefined variable (`ncd`) in one
+   negative-angle branch. Fixed on the hardening branch.
+3. Several baseline encoder variables are assigned without declarations and
+   therefore leak into global scope in non-strict JavaScript. Fixed on the
+   hardening branch.
+4. The baseline README documents `stalkout`, while the implementation emits
+   `seatalkOut`. The fork makes `stalkout` canonical and retains `seatalkOut`
+   temporarily for compatibility.
 5. Encoders do not explicitly reject `null`, non-finite, malformed, or stale
    values.
 6. Streams use the selected `self` value but provide no plugin-level source
@@ -62,6 +64,9 @@ external component.
 - Define and document one canonical output event.
 - Validate input types, ranges, and missing values.
 - Add CI-compatible lint and test commands.
+
+Progress: obvious encoder defects and the output-event mismatch have been fixed;
+the broader input-validation and test coverage work remains.
 
 ### M2 — Apparent wind
 

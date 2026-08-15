@@ -12,16 +12,15 @@ const stalk = require('../stalk.js')
 module.exports = function (app) {
   return {
     datagram: '0x53',
-    title: '0x53 - Magnetic Couse in degrees',
-    keys: ['navigation.courseOverGroundTrue','navigation.magneticVariation'],
-    f: function g0x53 (cog,magneticVariation) {
-      var mcd = parseInt(Math.round((cog-magneticVariation)*57.296))
-      if (mcd>=360) mcd=mcd-360
-      if (mcd<0) mcd=ncd+360
-      var u1 = (mcd / 90.0) & 0x03
-      var u2 = (stalk.fmod(mcd,2.0)*8.0) & 0x0c
-      var vw = (stalk.fmod(mcd,90.0)/2.0) & 0x3f
-      var u = ((u1+u2) << 4) & 0xf0
+    title: '0x53 - Magnetic Course in degrees',
+    keys: ['navigation.courseOverGroundTrue', 'navigation.magneticVariation'],
+    f: function g0x53 (cog, magneticVariation) {
+      const roundedDegrees = Math.round((cog - magneticVariation) * 57.296)
+      const mcd = ((roundedDegrees % 360) + 360) % 360
+      const u1 = (mcd / 90.0) & 0x03
+      const u2 = (stalk.fmod(mcd, 2.0) * 8.0) & 0x0c
+      const vw = (stalk.fmod(mcd, 90.0) / 2.0) & 0x3f
+      const u = ((u1 + u2) << 4) & 0xf0
       return stalk.toDatagram(['53', stalk.toHexString(u), stalk.toHexString(vw)])
     }
   }

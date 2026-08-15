@@ -14,14 +14,20 @@ module.exports = function (app) {
     title: '0x51 - LON position',
     keys: ['navigation.position'],
     f: function g0x51 (position) {
-      var longitude = Math.abs(position.longitude)
-      var degrees = Math.floor(longitude)
-      var minutes100 = parseInt(Math.round(100*(longitude-degrees)*60))
-      XX = stalk.toHexString(parseInt(degrees))
-      YYYY = minutes100 & 0x7FFF
-      if (position.longitude>0) YYYY = YYYY | 0x8000
-      YYYY = stalk.padd(YYYY.toString(16),4)
-      return stalk.toDatagram(['51', 'A2', XX, YYYY.substring(2,4), YYYY.substring(0,2)])
+      const longitude = Math.abs(position.longitude)
+      const degrees = Math.floor(longitude)
+      const minutes100 = Math.round(100 * (longitude - degrees) * 60)
+      const xx = stalk.toHexString(degrees)
+      let yyyy = minutes100 & 0x7FFF
+      if (position.longitude > 0) yyyy |= 0x8000
+      const encodedMinutes = stalk.padd(yyyy.toString(16).toUpperCase(), 4)
+      return stalk.toDatagram([
+        '51',
+        'A2',
+        xx,
+        encodedMinutes.substring(2, 4),
+        encodedMinutes.substring(0, 2)
+      ])
     }
   }
 }
