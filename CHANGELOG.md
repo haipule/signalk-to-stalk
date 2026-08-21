@@ -2,6 +2,45 @@
 
 ## Unreleased
 
+### Added
+
+- Added apparent wind angle (`0x10`) and speed (`0x11`) encoders with Signal K
+  unit and port/starboard conversion, range validation, and encoder vectors.
+- Added compass variation (`0x99`) with explicit Signal K east-positive to
+  SeaTalk west-positive conversion and range validation.
+- Added GNSS satellites and HDOP (`0x57`) with packed satellite count and
+  tenths-of-HDOP encoding.
+- Add GitHub Actions CI across supported Node.js versions and npm publishing CD with package validation, release-tag verification, and provenance.
+
+### Documentation
+
+- Added the 2026-08-15 vessel test record for the first successful live-bus
+  `0x50`/`0x51` GPS position test through the GadgetPool converter and the
+  independent GPIO20 receiver.
+- Added a complete decision matrix for all commands documented by Thomas Knauf
+  revision 3.22, including implementation status, exclusions, and safety
+  boundaries.
+
+### Fixed
+
+- Make the WebApp icon visible in the Signal K dashboard by using a packaged 72×72 PNG and a `public/`-relative `signalk.appIcon` path.
+
+## 2.0.10 - 2026-08-21
+
+### Added
+
+- Add pure great-circle geometry for local distance, true bearing, and signed cross-track-error fallback during Freeboard-SK direct-to navigation.
+- Report the active navigation source and precise guidance-suppression reasons through existing read-only telemetry.
+
+### Fixed
+
+- Make Freeboard-SK direct-to guidance self-sufficient when Course API calculations are absent but vessel and destination positions are available.
+- Delay new waypoint announcements until a coherent passive `0x85` frame can be emitted, preserving the required `0x85` then `0x82` sequence and preventing stale target/navigation associations.
+- Fall back from stale or skewed authoritative calculations to fresh coherent local geometry when possible.
+- Make SeaTalk `0x85` distance quantization deterministic at the 10 nm resolution boundary while preserving passive mode `F=5`.
+- Preserve the latest rate-limited display-light request for a trailing emission and cancel pending emissions on shutdown.
+- Interpret Signal K `dimmingLevel` value `1.0` as 100 percent brightness in automatic mode while retaining explicit raw-level mode.
+
 ## 2.0.9 - 2026-08-11
 
 ### Fixed
