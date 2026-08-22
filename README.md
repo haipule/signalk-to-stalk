@@ -1,5 +1,9 @@
 # signalk-to-stalk
 
+> **Project status: PAUSED** — Development is paused after the GPS/wind and
+> SeaTalk improvements were accepted upstream. The fork is retained for
+> reference and maintenance fixes only.
+
 [![CI](https://github.com/OpenFairWind/signalk-to-stalk/actions/workflows/test.yml/badge.svg)](https://github.com/OpenFairWind/signalk-to-stalk/actions/workflows/test.yml)
 [![npm](https://img.shields.io/npm/v/signalk-to-stalk.svg)](https://www.npmjs.com/package/signalk-to-stalk)
 
